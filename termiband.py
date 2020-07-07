@@ -44,26 +44,26 @@ class MiBand(Device):
         return days_dict
 
 
-# miband = MiBand("miband", "Mi Band 3")
-# 
-# miband.get_device_info()
-# 
-# tb_graph.histogram(miband.get_daily_steps_date('2020-06-01', '2020-07-04'))
-# 
-# print(type(date.today()))
-
 cli = tb_cli.init_cli()
 
+#Device selection to fetch data
 if "Mi Band 3" in cli["d"]:
-    miband = MiBand("miband", "Mi Band 3")
+    device = MiBand("miband", "Mi Band 3")
     if cli["info"]:
-        print("Device: "+miband.name)
-        print("Manufacturer: "+miband.manufacturer)
-        print("Identifier: "+miband.identifier)
-        print("Device: "+miband.name)
-        print("Model: "+miband.model)
-        #print("Alias: "+miband.alias) 
-        #TODO: exception to avoid print nonetype error 
+        print("Device: "+str(device.name))
+        print("Manufacturer: "+str(device.manufacturer))
+        print("Identifier: "+str(device.identifier))
+        print("Alias: "+str(device.alias))
+        print("Device: "+str(device.name))
+        print("Model: "+str(device.model)) 
+    
+    if cli["steps"]:
+        if cli["date"] == None:
+            steps_adq = device.get_daily_steps_date()
+        else:
+            steps_adq = device.get_daily_steps_date(cli["date"][0], cli["date"][1])
 
-if cli["histogram"]:
-    pass 
+        if cli["histogram"]:
+            tb_graph.histogram(steps_adq)
+        else:
+            print(steps_adq)    
