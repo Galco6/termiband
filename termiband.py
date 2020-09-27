@@ -80,12 +80,12 @@ else:
                 print("Model: "+str(device.model))
 
             if cli["steps"]:
-                if cli["date"] == None:
+                if cli['steps'][0] is None or cli['steps'][1] is None:
                     steps_adq = device.get_daily_steps_date()
                 else:
-                    steps_adq = device.get_daily_steps_date(cli["date"][0], cli["date"][1])
+                    steps_adq = device.get_daily_steps_date(cli['steps'][0], cli['steps'][1])
 
-                if cli["histogram"]:
+                if cli['histogram']:
                     tb_graph.histogram(steps_adq)   # FIXME: Add exception for empty steps_adq
                 else:
                     print(steps_adq)
